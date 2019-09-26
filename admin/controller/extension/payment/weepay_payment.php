@@ -273,7 +273,7 @@ class ControllerExtensionPaymentWeepayPayment extends Controller
 
     protected function validate()
     {
-        if (!$this->user->hasPermission('modify', 'extension/payment/moka_payment')) {
+        if (!$this->user->hasPermission('modify', 'extension/payment/weepay_payment')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
