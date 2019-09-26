@@ -1,0 +1,376 @@
+{{ header }}{{ column_left }}
+
+   <div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-free-checkout" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if error_warning %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        {% endif %}
+		 {% if error_version %}
+        <div class="alert alert-danger"><i class="fa fa-check-circle"></i> {{ error_version }} <a href="{{ version_update_link }}"><i class="fa fa-arrow-down"></i> {{ weepay_update_button }}</a> {{ weepay_or_text }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        {% endif %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i>  {{ text_edit }}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-free-checkout" class="form-horizontal">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab-api" data-toggle="tab" aria-expanded="true">{{ text_tabapi }}</a></li>
+                        <li class=""><a href="#tab-about" data-toggle="tab" aria-expanded="true">{{ text_tababout }}</a></li>
+
+                    </ul>
+
+                    <div class="tab-content">
+
+                        <div class="tab-pane  active" id="tab-api">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment_weepay_payment_bayiid"> {{ entry_bayiid }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="payment_weepay_payment_bayiid" value="{{ payment_weepay_payment_bayiid }}" class="form-control"/>
+									  {% if error_bayiid %}
+                                 
+                                        <span class="text-danger">{{ error_bayiid }}</span>
+                                 {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment_weepay_payment_api">{{ entry_api }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="payment_weepay_payment_api" value="{{ payment_weepay_payment_api }}" class="form-control"/>
+                                    	  {% if error_api %}
+                                 
+                                        <span class="text-danger">{{ error_api }}</span>
+                                      {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment_weepay_payment_secret">{{ entry_secret }} </label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="payment_weepay_payment_secret" value="{{ payment_weepay_payment_secret }}" class="form-control"/>
+                                       {% if error_secret %}
+                              
+                                        <span class="text-danger">{{ error_secret }} </span>
+                                        {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment_weepay_payment_status">{{ entry_status }} </label>
+                                <div class="col-sm-10">
+                                    <select name="payment_weepay_payment_status" class="form-control">
+                                     
+                                       {% if payment_weepay_payment_status %}
+                                  
+                                            <option value="1" selected="selected">{{ text_enabled }}</option>
+                                            <option value="0">{{ text_disabled }}</option>
+                                       {% else %}
+                                            <option value="1">{{ text_enabled }}</option>
+                                            <option value="0" selected="selected">{{ text_disabled }}  </option>
+                                    {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment_weepay_payment_installement">{{ entry_installement }}</label>
+                                <div class="col-sm-10">
+                                    <select name="payment_weepay_payment_installement" class="form-control">
+                                    {% if weepay_installement.stock  == "OFF" %}
+                                     
+                                            <option value="ON">{{ text_enabled }}</option>
+                                            <option value="OFF" selected="selected">{{ text_disabled }}</option>
+                                      {% else %}
+                                            <option value="ON" selected="selected">{{ text_enabled }}</option>
+                                            <option value="OFF">{{ text_disabled }}</option>
+                                          {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment_weepay_payment_form_type">{{ entry_form_type }}</label>
+                                <div class="col-sm-10">
+                                    <select name="payment_weepay_payment_form_type" class="form-control">
+                                     {% if payment_weepay_payment_form_type  == "responsive" %}
+                                  
+                                        
+                                            <option value="popup">{{ entry_class_popup }}</option>
+                                            <option value="responsive" selected="selected">{{ entry_class_responsive }}</option>
+                                          {% else %}
+                                            <option value="popup" selected="selected">{{ entry_class_popup }}</option>
+                                            <option value="responsive">{{ entry_class_responsive }} </option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment_weepay_payment_test_mode">{{ entry_test_mode }}</label>
+                                <div class="col-sm-10">
+                                    <select name="payment_weepay_payment_test_mode" class="form-control">
+                                           {% if payment_weepay_payment_test_mode  == "OFF" %}
+                                   
+                                            <option value="ON">{{ text_enabled }} </option>
+                                            <option value="OFF" selected="selected">{{ text_disabled }}</option>
+                                           {% else %}
+                                            <option value="ON" selected="selected">{{ text_enabled }}</option>
+                                            <option value="OFF">{{ text_disabled }}</option>
+                                             {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="weepay_order_status_id">
+                                    <span data-toggle="tooltip" title="{{ entry_order_status }}">
+                                        {{ entry_order_status }}
+                                    </span>
+                                </label>
+                                <div class="col-sm-10">
+                                    <select name="payment_weepay_payment_order_status_id" id="input-order-status" class="form-control">
+                                         {% for order_status in order_statuses %}
+                                {% if order_status.order_status_id  ==  payment_weepay_payment_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                               {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+{% endif %} 
+
+           {% endfor %}  
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment_weepay_payment_cancel_order_status_id"><span data-toggle="tooltip" title="{{ entry_cancel_order_status }}">{{  entry_cancel_order_status}}  </span></label>
+                                <div class="col-sm-10">
+                                    <select name="payment_weepay_payment_cancel_order_status_id" id="input-cancel-order-status" class="form-control">
+                                      
+                                {% for order_status in order_statuses %}
+                                {% if order_status.order_status_id  ==  payment_weepay_payment_order_status_id %}
+                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                               {% else %}
+                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+{% endif %} 
+
+           {% endfor %}           
+                                      
+                        
+                                        
+                                        
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-order-status">{{ entry_sort_order }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="payment_weepay_payment_sort_order" value="{{ payment_weepay_payment_sort_order }}" size="1" class="form-control"/>
+                                </div>
+                            </div>
+
+
+                        </div>
+                </form>
+
+
+
+
+
+                <div class="tab-pane" id="tab-about">
+                    <div class="panel">
+                        <div class="row kahvedigital_weepay-header">
+                            <img src="../catalog/view/theme/default/image/weepay_payment/weepos-logo.png" class="col-xs-4 col-md-2 text-center" id="payment-logo" />
+                            <div class="col-xs-6 col-md-5 text-center">
+                                <h4>weepay Ödeme Hizmetleri</h4>
+                                <h4>Hızlı Güvenli ve Kolay</h4>
+                            </div>
+                            <div class="col-xs-12 col-md-5 text-center">
+                                <a href="https://weepay.co" class="btn continue-button" id="create-account-btn">weePos'a başvurun</a><br />
+                                weePos'unuz varsa ?<a href="https://pos.weepay.co"> Hesabınıza giriş yapın</a>
+                            </div>
+                        </div>
+
+                        <hr />
+
+
+                        <div class="kahvedigital_weepay-content">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="thumbnail">
+                                        <figure class="figure text-center">
+                                            <img src="../catalog/view/theme/default/image/weepay_payment/ertesigun-icon.svg" width="140" height="100"/>
+                                        </figure>
+                                        <p class="text text-center">
+                                            7x24 kesintisiz
+                                            <br>Ertesi iş günü hesabınızda
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="thumbnail">
+                                        <figure class="figure text-center">
+                                            <img src="../catalog/view/theme/default/image/weepay_payment/hesaplisatis.svg" width="140" height="100"/>
+                                        </figure>
+                                        <p class="text text-center">
+                                            Hesaplı
+                                            <br>satış avantajı
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="thumbnail">
+                                        <figure class="figure text-center">
+                                            <img src="../catalog/view/theme/default/image/weepay_payment/butunkredikartlari.svg" width="140" height="100"/>
+                                        </figure>
+                                        <p class="text text-center">
+                                            Bütün kredi kartları için
+                                            <br>taksitli satış imkanı
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="thumbnail">
+                                        <figure class="figure text-center">
+                                            <img src="../catalog/view/theme/default/image/weepay_payment/visamastercard.svg" width="140" height="100"/>
+                                        </figure>
+                                        <p class="text text-center">
+                                            Visa ve MasterCard
+                                            <br>tahsilat imkanı
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="thumbnail">
+                                        <figure class="figure text-center">
+                                            <img src="../catalog/view/theme/default/image/weepay_payment/dolareuro.svg" width="140" height="100"/>
+                                        </figure>
+                                        <p class="text text-center">
+                                            Yabancı kartlar ile
+                                            <br>işlem yapabilme
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="thumbnail">
+                                        <figure class="figure text-center">
+                                            <img src="../catalog/view/theme/default/image/weepay_payment/kolayentegrasyon.svg" width="140" height="100"/>
+                                        </figure>
+                                        <p class="text text-center">
+                                            Hızlı ve kolay
+                                            <br>entegrasyon
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>					
+
+
+
+
+
+                </div>
+
+            </div>	
+
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<style>
+    .continue-button {
+        width: 280px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: -.33px;
+        border-radius: 31px;
+        background-image: linear-gradient(279deg,#5170e9 ,#12bbe2);
+        height: 40px;
+        line-height: 38px;
+        border-radius: 100px;
+
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: -.33px;
+
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        outline: 0;
+        padding: 0 20px;
+    }
+    .zbtn {
+        border: none;
+        font-family: inherit;
+        font-size: 13px;
+        color: white !important;
+        background: none;
+        cursor: pointer;
+        padding: 25px 80px;
+        display: inline-block;
+
+        margin: 15px 30px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        max-width: 350px;
+        min-width: 350px;
+        outline: none;
+        position: relative;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+    .btn-2a {
+        border-radius: 0 0 5px 5px;
+    }
+
+    .btn-2a:hover {
+        box-shadow: 0 4px #e91027;
+        top: 2px;
+    }
+
+    .btn-2a:active {
+        box-shadow: 0 0 #e91027;
+        top: 6px;
+    }
+    .btn-2 {
+        background: #ff2b42;
+        color: #fff;
+        box-shadow: 0 6px #e91027;
+        -webkit-transition: none;
+        -moz-transition: none;
+        transition: none;
+    }
+
+</style>
+{{ footer }}
+
+
