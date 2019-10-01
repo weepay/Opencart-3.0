@@ -43,7 +43,7 @@ class ModelExtensionPaymentWeepayPayment extends Model {
         
     }
 
-    public function updateCustomer($customer_id, $card_key, $mokapi) {
+    public function updateCustomer($customer_id, $card_key, $weepayapi) {
         
     }
 
