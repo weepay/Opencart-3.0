@@ -30,10 +30,29 @@ class ControllerExtensionPaymentWeepayPayment extends Controller
         return $this->load->view($template_url, $data);
 
     }
+    private function setcookieSameSite($name, $value, $expire, $path, $domain, $secure, $httponly)
+    {
+
+        if (PHP_VERSION_ID < 70300) {
+
+            setcookie($name, $value, $expire, "$path; samesite=None", $domain, $secure, $httponly);
+        } else {
+            setcookie($name, $value, [
+                'expires' => $expire,
+                'path' => $path,
+                'domain' => $domain,
+                'samesite' => 'None',
+                'secure' => $secure,
+                'httponly' => $httponly,
+            ]);
+
+        }
+    }
 
     public function checkoutform()
     {
         try {
+            $setCookie = $this->setcookieSameSite("PHPSESSID", $_COOKIE['PHPSESSID'], time() + 86400, "/", $_SERVER['SERVER_NAME'], true, true);
             $data['checkout_form_content'] = '';
             $data['error'] = '';
             $data['form_class'] = $this->config->get('payment_weepay_payment_form_type');
