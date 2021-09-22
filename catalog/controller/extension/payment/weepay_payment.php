@@ -206,10 +206,11 @@ class ControllerExtensionPaymentWeepayPayment extends Controller
                 $this->response->redirect($this->url->link('checkout/success', '', $server_conn_slug));
             }
         } catch (\Exception $ex) {
-             $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_weepay_payment_cancel_order_status_id'), $message, false);
+            
             $resp_msg = $ex->getMessage();
             $resp_msg = !empty($resp_msg) ? $resp_msg : $this->language->get('invalid_request');
             $this->session->data['error'] = $resp_msg;
+             $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_weepay_payment_cancel_order_status_id'), $resp_msg, false);
             $this->response->redirect($this->url->link('checkout/checkout', '', $server_conn_slug));
         }
     }
