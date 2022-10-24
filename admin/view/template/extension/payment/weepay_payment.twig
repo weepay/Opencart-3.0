@@ -167,7 +167,7 @@
                                     <select name="payment_weepay_payment_cancel_order_status_id" id="input-cancel-order-status" class="form-control">
                                       
                                 {% for order_status in order_statuses %}
-                                {% if order_status.order_status_id  ==  payment_weepay_payment_order_status_id %}
+                                {% if order_status.order_status_id  ==  payment_weepay_payment_cancel_order_status_id %}
                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                {% else %}
                                 <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
